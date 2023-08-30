@@ -287,7 +287,6 @@ module.exports = {
     verify: (data) => {
         return new Promise(async (resolve, reject) => {
             try {
-                console.log(data)
                 let isValidOtp = await bcrypt.compare(data.otp, data.encrypted);
                 if (isValidOtp) {
                     db.get().collection(COLLECTIONS.USERS).findOneAndUpdate(
