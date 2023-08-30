@@ -1,5 +1,7 @@
 const db = require('./config.js');
 const COLLECTIONS = require('./cls.js');
+var Filter = require('bad-words');
+var badFilter = new Filter({ placeHolder: 'x'});
 const ObjectId = require('mongodb').ObjectID;
 const uuid = require('uuid');
 
@@ -39,7 +41,7 @@ module.exports = {
             const timestamp = new Date(); // Get the current timestamp
             const postData = {
                 user: ObjectId(userId), // Assuming userId is the ID of the user creating the post
-                content: content,
+                content: badFilter.clean(content),
                 timestamp: timestamp,
                 upvote: [],
                 downvote: []
@@ -77,7 +79,7 @@ module.exports = {
                                 email: user.email,
                                 subject: "Something important!",
                                 text: `Hello ${user.firstname}, important post by `,
-                                content: `${content}\n\n - <a href="https://thintry.com/user/${client.username}">${client.firstname} ${client.lastname}</a>`
+                                content: `${badFilter.clean(content)}\n\n - <a href="https://thintry.com/user/${client.username}">${client.firstname} ${client.lastname}</a>`
                             });
                         });
                     }, 1000);
@@ -102,7 +104,7 @@ module.exports = {
             const replyData = {
                 post_id: ObjectId(postId),
                 user_id: ObjectId(userId), // Assuming userId is the ID of the user creating the post
-                content: content,
+                content: badFilter.clean(content),
                 timestamp: timestamp,
                 upvote: [],
                 downvote: []
@@ -119,7 +121,7 @@ module.exports = {
                                     email: user.email,
                                     subject: `${client.firstname} ${client.lastname} mentioned you!`,
                                     text: `Hello ${user.firstname}, ${client.firstname} ${client.lastname} mentioned you!`,
-                                    content: `${content}\n\n - <a href="https://thintry.com/user/${client.username}">${client.firstname} ${client.lastname}</a>`
+                                    content: `${badFilter.clean(content)}\n\n - <a href="https://thintry.com/user/${client.username}">${client.firstname} ${client.lastname}</a>`
                                 });
                             }
                         }).catch((error) => {
