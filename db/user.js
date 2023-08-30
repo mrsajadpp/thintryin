@@ -6,7 +6,7 @@ const schedule = require('node-schedule');
 const saltRounds = 10;
 var nodemailer = require('nodemailer');
 
-let transporter = nodemailer.createTransport({  
+let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
     secure: false,
@@ -29,39 +29,75 @@ let sendMail = (data) => {
     return;
 }
 
+// ...
+
+const removeDuplicateFollowersAndFollowings = async () => {
+    try {
+        const users = await db.get().collection(COLLECTIONS.USERS).find({}).toArray();
+
+        for (const user of users) {
+            const uniqueFollowers = Array.from(new Set(user.followers));
+            const uniqueFollowings = Array.from(new Set(user.followings));
+
+            await db.get().collection(COLLECTIONS.USERS).updateOne(
+                { _id: user._id },
+                { $set: { followers: uniqueFollowers, followings: uniqueFollowings } }
+            );
+        }
+
+        console.log("Duplicate followers and followings removed successfully.");
+    } catch (error) {
+        console.error("Error removing duplicate followers and followings:", error);
+    }
+};
+
+schedule.scheduleJob('*/7 * * * *', () => {
+    try {
+        removeDuplicateFollowersAndFollowings();
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+// ...
+
+
 const delUn = () => {
     setTimeout(async () => {
-        let users = await db.get().collection(COLLECTIONS.USERS).find({ status: false }).toArray().catch(error => console.log(error) );
-        users.forEach(user => {
-            db.get().collection(COLLECTIONS.USERS).deletOne({ _id: user._id }).catch(error => console.log(error) );;
-        });
+        try {
+            let users = await db.get().collection(COLLECTIONS.USERS).find({ status: false }).toArray();
+            for (const user of users) {
+                await db.get().collection(COLLECTIONS.USERS).deleteOne({ _id: user._id });
+            }
+        } catch (error) {
+            console.error("Error in delUn:", error);
+        }
     }, 1000);
 }
 
 const updateOtp = () => {
     setTimeout(async () => {
-        let users = await db.get().collection(COLLECTIONS.USERS).find({ status: false }).toArray().catch(error => console.log(error) );;
-        users.forEach(async user => {
-            let verification_code = await Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
-            db.get().collection(COLLECTIONS.USERS).findOneAndUpdate({ _id: user._id }, { $set: { verification_code: verification_code, encrypted_verification_code: bcrypt.hash(verification_code, saltRounds) } }).catch(error => console.log(error) );
-        });
+        try {
+            let users = await db.get().collection(COLLECTIONS.USERS).find({ status: false }).toArray();
+            for (const user of users) {
+                let verification_code = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+                await db.get().collection(COLLECTIONS.USERS).findOneAndUpdate(
+                    { _id: user._id },
+                    { $set: { verification_code: verification_code, encrypted_verification_code: await bcrypt.hash(verification_code, saltRounds) } }
+                );
+            }
+        } catch (error) {
+            console.error("Error in updateOtp:", error);
+        }
     }, 1000);
 }
 
 schedule.scheduleJob('*/7 * * * *', () => {
-    try {
-        delUn();
-    } catch (error) {
-        console.log(error)
-    }
+    delUn();
 });
 
-schedule.scheduleJob('*/7 * * * *', function () {
-    try {
-        updateOtp();
-    } catch (error) {
-        console.log(error) 
-    }
+schedule.scheduleJob('*/7 * * * *', () => {
+    updateOtp();
 });
 
 module.exports = {
