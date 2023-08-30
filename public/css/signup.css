@@ -1,0 +1,127 @@
+a {
+    color: #6fbf7e !important;
+}
+
+.loginForm {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginForm .bannerArea {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginForm .bannerArea img {
+    width: 150px;
+}
+
+.loginForm .inputs {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginForm .inputs form {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.name {
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginForm .inputs .input {
+    width: 80%;
+    height: 50px;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+.loginForm .noerror-inp {
+    border-bottom: 2px solid rgb(58, 59, 60) !important;
+}
+
+.loginForm .inputs .input input {
+    border: none;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    outline: none;
+    color: #fff;
+}
+
+.loginForm .inputs .loginbtn {
+    width: 80%;
+    height: 50px;
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+.loginForm .inputs .loginbtn button {
+    width: 100%;
+    height: 100%;
+    background-color: #6fbf7e;
+    border: none;
+    border-radius: 85px;
+}
+
+.loginForm .inputs .textarea {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffff;
+    height: 100px;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    position: absolute;
+    left: 0;
+    top: -10px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.input {
+    position: relative;
+}
+
+.error.show {
+    opacity: 1;
+}
+
+.servererror {
+    color: red;
+    font-size: 14px;
+    margin-top: 15px;
+}
+
+.error-inp {
+    border-bottom: 2px solid red !important;
+}

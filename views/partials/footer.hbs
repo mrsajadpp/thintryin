@@ -1,0 +1,63 @@
+<div class="footer" id="footer">
+    <div class="icons">
+        <nav>
+            <a href="/">
+                <button>
+                    {{#contains "home" page}}
+                    <box-icon type="solid" name='home' color="#6fbf7e"></box-icon>
+                    {{else}}
+                    <box-icon type="solid" name='home' color="#fff"></box-icon>
+                    {{/contains}}
+                </button>
+            </a>
+        </nav>
+    </div>
+    <div class="icons">
+        <nav>
+            <a href="/messages">
+                <button>
+                    {{#contains "messages" page}}
+                    <box-icon type="solid" name='message-square-dots' color="#6fbf7e"></box-icon>
+                    {{else}}
+                    <box-icon type="solid" name='message-square-dots' color="#fff"></box-icon>
+                    {{/contains}}
+                </button>
+            </a>
+        </nav>
+    </div>
+    <div class="icons">
+        <nav>
+            <a id="postbackbtn">
+                <button>
+                    <box-icon name='plus' color="#fff"></box-icon>
+                </button>
+            </a>
+        </nav>
+    </div>
+    <div class="icons">
+        <nav>
+            <a href="/notifications">
+                <button>
+                    {{#contains "notifications" page}}
+                    <box-icon name='bell' type='solid' color="#6fbf7e"></box-icon>
+                    {{else}}
+                    <box-icon name='bell' type='solid' color="#fff"></box-icon>
+                    {{/contains}}
+                </button>
+            </a>
+        </nav>
+    </div>
+    <div class="icons">
+        <nav>
+            <a href="/profile">
+                <button>
+                    {{#contains "user" page}}
+                    <box-icon name='user' color="#6fbf7e"></box-icon>
+                    {{else}}
+                    <box-icon name='user' color="#fff"></box-icon>
+                    {{/contains}}
+                </button>
+            </a>
+        </nav>
+    </div>
+</div>

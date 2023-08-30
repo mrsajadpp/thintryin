@@ -1,0 +1,45 @@
+<div class="settings-container">
+    <div class="searchdiv">
+        <button id="navbackbtn" onclick="location.href = '/profile'" type="button">
+            <box-icon type='solid' name='chevron-left' color="#6fbf7e"></box-icon>
+        </button>
+        <div class="page-head">Followings</div>
+    </div>
+    <div class="about-container">
+        {{#if followings.length}}
+        {{#each followings}}
+        <div id="{{this.followingDetails._id}}" class="tweet">
+            <div class="tweet-container pt pb pr pl">
+                <div class="user pr">
+                    <div class="userl" onclick="location.href = '/user/{{this.followingDetails.username}}'">
+                        <div class="profile">
+                            <img src="{{this.followingDetails.profile}}" onerror="this.src='/img/demopic.png'; this.onerror=null;"
+                                alt="{{this.followingDetails.firstanme}} {{this.followingDetails.lastname}} - Thintry" />
+                        </div>
+                        <div class="username">
+                            <div class="name">{{this.followingDetails.firstname}} {{this.followingDetails.lastname}} &nbsp;{{#if this.followingDetails.verified}}{{#if
+                                this.followingDetails.official}}<box-icon type='solid' name='badge-check'
+                                    color="#6fbf7e"></box-icon>{{else}}<box-icon type='solid' name='badge-check'
+                                    color="#fff"></box-icon>{{/if}}{{/if}}
+                            </div>
+                            <div class="handle">@{{this.followingDetails.username}}</div>
+                        </div>
+                    </div>
+                    <div class="userr">
+                        <div class="follow">
+                            <button class="bttwo" onclick="location.href = '/user/{{this.followingDetails.username}}'">
+                                <box-icon name='user' color="#6fbf7e"></box-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        {{else}}
+        <div class="null">
+            <span>No Followings</span>
+        </div>
+        {{/if}}
+    </div>
+</div>

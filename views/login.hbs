@@ -1,0 +1,65 @@
+<div class="loginForm">
+    <div class="bannerArea">
+        <img src="/img/thintry-logo.png" alt="">
+    </div>
+    <div class="inputs">
+        <form action="/auth/login" method="post" onsubmit="return validateForm()">
+            <div class="input">
+                <input type="text" class="noerror-inp" id="username" name="username" placeholder="Username" required
+                    autocomplete="off">
+                <span id="usernameError" class="error"></span>
+            </div>
+            <div class="input">
+                <input type="password" class="noerror-inp" id="password" name="password" placeholder="Password" required
+                    autocomplete="off">
+                <span id="passwordError" class="error"></span>
+            </div>
+            {{#if error}}
+            <script>
+                const usernamee = document.getElementById('username');
+                const passwordd = document.getElementById('password');
+                usernamee.classList.replace('noerror-inp', 'error-inp');
+                passwordd.classList.replace('noerror-inp', 'error-inp');
+            </script>
+            <div id="serverError" class="servererror">{{error.message}}</div>
+            {{/if}}
+            <div class="loginbtn">
+                <button>LogIn</button>
+            </div>
+            <div class="textarea">
+                <span>Don't have an account? , <a href="/auth/signup">SignUp</a>.</span>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function validateForm() {
+        let valid = true;
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const usernameError = document.getElementById('usernameError');
+        const passwordError = document.getElementById('passwordError');
+
+        // Validate username (no spaces)
+        if (username.includes(' ')) {
+            usernameError.textContent = "Username cannot contain spaces";
+            usernameError.classList.add('show');
+            valid = false;
+        } else {
+            usernameError.textContent = "";
+            usernameError.classList.remove('show');
+        }
+
+        // Validate password (at least 6 characters)
+        if (password.length < 6) {
+            passwordError.textContent = "Password must be at least 6 characters";
+            passwordError.classList.add('show');
+            valid = false;
+        } else {
+            passwordError.textContent = "";
+            passwordError.classList.remove('show');
+        }
+
+        return valid;
+    }
+</script>

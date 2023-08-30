@@ -1,0 +1,83 @@
+<div class="edit-container" id="editContainer">
+    <div class="searchdiv">
+        <button id="navbackbtn" type="button">
+            <box-icon type='solid' name='chevron-left' color="#6fbf7e"></box-icon>
+        </button>
+        <div></div>
+    </div>
+    <div id="page">
+        <form class="newpost" action="/profile/update" method="post" enctype="multipart/form-data" style="height: 100% !important;">
+            <input type="text" name="_id" value="{{user._id}}" hidden>
+            <div class="contentarea" style="height: 80px !important;">
+                <input type="text" name="firstname" value="{{user.firstname}}" placeholder="Firstname" autofocus='false'>
+                &nbsp;&nbsp;
+                <input type="text" name="lastname" value="{{user.lastname}}" placeholder="Lastname" autofocus='false'>
+            </div>
+            <div class="contentarea"
+                style="height: 80px !important; display: flex; align-items: center; justify-content: center;">
+                <input type="file" id="profilePic" name="profile" style="display: none;" accept="image/*">
+                <button type="button" id="uploadBtn" onclick="document.getElementById('profilePic').click();"
+                    style="background-color: #6fbf7e; border: none; width: 100%; height: 100%; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #000 !important;"
+                    class="upload-button">
+                    <box-icon type='solid' name='file-image' color="#000"></box-icon> &nbsp; Choose Profile
+                </button>
+            </div>
+            <script>
+                document.getElementById('profilePic').addEventListener('change', () => {
+                    const fileName = document.getElementById('profilePic').files[0].name;
+                    document.getElementById('uploadBtn').innerHTML = `<box-icon type='solid' name='file-image' color='#000'></box-icon> &nbsp; ${fileName}`;
+                });
+            </script>
+            <div class="contentarea" style="height: 80px !important;">
+                <input type="text" id="username" class="username-inp" value="@{{user.username}}" name="username"
+                    placeholder="Username" autofocus='false'>
+            </div>
+            <div class="contentareaa" style="height: 130px !important;">
+                <textarea name="about" id="content" placeholder="Write yourself." maxlength="300"
+                    required autofocus='false'>{{user.about}}</textarea>
+            </div>
+            <div class="postsubmit">
+                <button id="saveButton"><box-icon type='solid' name='chevron-right'></box-icon></button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const editBtn = document.getElementById('editButton');
+        const editBackBtn = document.getElementById('navbackbtn');
+        const editContainer = document.getElementById('editContainer');
+        const usernameInput = document.getElementById('username');
+
+        editBackBtn.addEventListener('click', () => {
+            editContainer.classList.toggle('actived');
+        });
+
+        editBtn.addEventListener('click', () => {
+            editContainer.classList.toggle('actived');
+        });
+
+        usernameInput.addEventListener('input', () => {
+            if (!usernameInput.value.startsWith('@')) {
+                usernameInput.value = `@${usernameInput.value}`;
+            }
+            checkUsernameExists(usernameInput.value);
+        });
+
+        function checkUsernameExists(username) {
+            // You should replace this URL with your actual backend endpoint
+            const checkURL = `/api/check-username?username=${username}`;
+
+            fetch(checkURL)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exist) {
+                        usernameInput.classList.add('error-user')
+                    } else {
+                        usernameInput.classList.remove('error-user')
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking username:', error);
+                });
+        }
+    </script>

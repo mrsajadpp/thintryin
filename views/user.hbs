@@ -1,0 +1,442 @@
+{{#if profile}}
+<div class="profile-container">
+    <div class="profile-card">
+        <div class="dp">
+            <div class="dp-ring">
+                <img src="{{profile.profile}}"
+                    onerror="this.src='/img/demopic.png'; this.alt='{{profile.firstname}} {{profile.lastname}} - {{profile.username}}'; this.onerror=null;"
+                    alt="{{profile.firstname}} {{profile.lastname}} - {{profile.username}}"
+                    title="{{profile.firstname}} {{profile.lastname}} - {{profile.username}}">
+            </div>
+
+            <div class="name-tag">
+                <div class="name">{{profile.firstname}} {{profile.lastname}} &nbsp;{{#if profile.verified}}{{#if
+                    profile.official}}<box-icon type='solid' name='badge-check'
+                        color="#6fbf7e"></box-icon>{{else}}<box-icon type='solid' name='badge-check'
+                        color="#fff"></box-icon>{{/if}}{{/if}}</div>
+                <div class="username">@{{profile.username}}</div>
+            </div>
+        </div>
+        <div class="list">
+            <a href="/followers/{{profile._id}}" class="lleft">
+                <button class="lleft">
+                    <span id="followersCount">{{#formatNumber
+                        profile.followers.length}}{{/formatNumber}}</span>Followers
+                </button>
+            </a>
+            <a href="/followings/{{profile._id}}" class="lright">
+                <button class="lright">
+                    <span>{{#formatNumber profile.followings.length}}{{/formatNumber}}</span>Following
+                </button>
+            </a>
+        </div>
+        <div class="btns">
+            {{#if isFollowing}}
+            <div class="buttons" id="followBtns">
+                <button id="unFollowButton" onclick="unFollow();" class="unbutton"><box-icon name='user-minus'
+                        color="#6fbf7e"></box-icon>&nbsp;Unfollow</button>
+            </div>
+            {{else}}
+            {{#if isFollowingBack}}
+            <div class="buttons" id="followBtns">
+                <button id="followButton" onclick="follow();"><box-icon name='user-plus'></box-icon>&nbsp;Follow
+                    Back</button>
+            </div>
+            {{else}}
+            <div class="buttons" onclick="follow();" id="followBtns">
+                <button id="followButton"><box-icon name='user-plus'></box-icon>&nbsp;Follow</button>
+            </div>
+            {{/if}}
+            {{/if}}
+        </div>
+    </div>
+    <div class="profile-content">
+        <div class="tools">
+            <div class="tool">
+                {{#contains 'posts' type}}
+                <a href="/user/{{profile.username}}" id="a" class="active">
+                    <button id="all"><box-icon type='solid' name='quote-single-left'
+                            color="#6fbf7e"></box-icon>&nbsp;Posts</button>
+                </a>
+                {{else}}
+                <a href="/user/{{profile.username}}" id="a"><button id="all"><box-icon type='solid'
+                            name='quote-single-left' color="#6fbf7e"></box-icon>&nbsp;Posts</button>
+                </a>
+                {{/contains}}
+            </div>
+            <div class="tool">
+                {{#contains 'about' type}}
+                <a href="/user/{{profile.username}}?type=about" id="d" class="active">
+                    <button id="about"><box-icon name='info-circle' color="#6fbf7e"></box-icon>&nbsp;About</button>
+                </a>
+                {{else}}
+                <a href="/user/{{profile.username}}?type=about" id="d">
+                    <button id="about"><box-icon name='info-circle' color="#6fbf7e"></box-icon>&nbsp;About</button>
+                </a>
+                {{/contains}}
+            </div>
+            {{#if profile.donation_link}}
+            <div class="tool">
+                <a href="{{profile.donation_link}}" id="e">
+                    <button id="donate"><box-icon name='donate-heart' color="#ff2b4b"></box-icon>&nbsp;Donate</button>
+                </a>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+    {{#contains 'posts' type}}
+    <div id="page">
+        {{#if posts}}
+        {{#each posts}}
+        <div id="{{this._id}}" class="tweet">
+            <div class="tweet-container pt pb pr pl">
+                <div class="user pr">
+                    <div class="userl" onclick="location.href = '/user/{{../profile.username}}'">
+                        <div class="profile">
+                            <img src="{{../profile.profile}}" onerror="this.src='/img/demopic.png'; this.onerror=null;"
+                                alt="{{../profile.firstname}} {{../profile.lastname}} - Profile Image"
+                                title="{{../profile.firstname}} {{../profile.lastname}} - Profile Image" />
+
+                        </div>
+                        <div class="username">
+                            <div class="name">
+                                {{../profile.firstname}} {{../profile.lastname}} &nbsp;{{#if
+                                ../profile.verified}}{{#if
+                                ../profile.official}}<box-icon type='solid' name='badge-check'
+                                    color="#6fbf7e"></box-icon>{{else}}<box-icon type='solid' name='badge-check'
+                                    color="#fff"></box-icon>{{/if}}{{/if}}
+                            </div>
+                            <div class="handle">@{{../profile.username}}</div>
+                        </div>
+                    </div>
+                    <div class="userr">
+                        <div class="follow">
+                            <button class="bttwo post-menu" onclick="composeEmail()">
+                                <box-icon name='flag-alt' type="solid" color="orange"></box-icon>
+                            </button>
+                        </div>
+
+                        <script>
+                            function composeEmail() {
+                                var toAddress = "help@thintry.com";
+                                var subject = "New post report!";
+
+                                var postData = {
+                                    postID: "{{this._id}}",
+                                    content: "{{this.content}}",
+                                    timestamp: "{{this.timestamp}}",
+                                    upvotes: "{{this.upvote.length}}",
+                                    downvotes: "{{this.downvote.length}}"
+                                };
+
+                                var body = JSON.stringify(postData, null, 2); // Converts the postData object to a JSON string with formatting
+
+                                var mailtoLink = "mailto:" + encodeURIComponent(toAddress) + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+                                window.location.href = mailtoLink;
+                            }
+                        </script>
+                    </div>
+                </div>
+                <div class="tweet-content pt" onclick="location.href = '/post/{{this._id}}'"><a
+                        href="/post/{{this._id}}">{{{parseContent this.content}}}</a></div>
+                {{!-- <img class="media" src="https://i.giphy.com/media/26ufp2LYURTvL5PRS/giphy.webp" /> --}}
+                <div class="date pt pb">{{#formatTime this.timestamp}}{{/formatTime}} • {{this.date}} from
+                    <a href="https://www.google.com/maps/search/{{encodeURIComponent ../profile.created.location.region}}"
+                        title="Search on Google Maps">{{../profile.created.location.region}},
+                        {{../profile.created.location.country}}</a>
+                </div>
+
+                <div class="rl pt pb">
+                    <div class="retweets"><b><span class="up-count" id="main-up-count-{{this._id}}">{{#formatNumber
+                                this.upvote.length}}{{/formatNumber}}</span></b> Upvotes</div>
+                    <div class="likes"><b><span class="down-count" id="main-dow-count-{{this._id}}">{{#formatNumber
+                                this.downvote.length}}{{/formatNumber}}</span></b> Downvotes</div>
+                </div>
+            </div>
+            <div class="icons">
+                <div class="ico"><box-icon name='message-square-add' onclick="location.href = '/post/{{this._id}}'"
+                        color="#fff" class="img"></box-icon>
+                    <div class="number">{{#formatNumber this.reply.length}}{{/formatNumber}}</div>
+                </div>
+                <div class="ico">
+                    {{#includes this.upvote ../user._id}}
+                    <span id="up-{{this._id}}">
+                        <box-icon type='solid' name='up-arrow' onclick="onVote('{{this._id}}', 'up')" color="#6fbf7e"
+                            class="img"></box-icon>
+                    </span>
+                    <div class="number"><span id="up-count-{{this._id}}" class="up-count">{{#formatNumber
+                            this.upvote.length}}{{/formatNumber}}</span>
+                    </div>
+                    {{else}}
+                    <span id="up-{{this._id}}">
+                        <box-icon type='solid' name='up-arrow' onclick="onVote('{{this._id}}', 'up')" color="#fff"
+                            class="img"></box-icon>
+                    </span>
+                    <div class="number"><span class="up-count" id="up-count-{{this._id}}">{{#formatNumber
+                            this.upvote.length}}{{/formatNumber}}</span>
+                    </div>
+                    {{/includes}}
+                </div>
+                <div class="ico">
+                    {{#includes this.downvote ../user._id}}
+                    <span id="dow-{{this._id}}">
+                        <box-icon name='down-arrow' type='solid' onclick="onVote('{{this._id}}', 'down')"
+                            color="#6fbf7e" class="img"></box-icon>
+                    </span>
+                    <div class="number"><span id="dow-count-{{this._id}}" class="down-count">{{#formatNumber
+                            this.downvote.length}}{{/formatNumber}}</span></div>
+                    {{else}}
+                    <span id="dow-{{this._id}}">
+                        <box-icon name='down-arrow' type='solid' onclick="onVote('{{this._id}}', 'down')" color="#fff"
+                            class="img"></box-icon>
+                    </span>
+                    <div class="number"><span id="dow-count-{{this._id}}" class="down-count">{{#formatNumber
+                            this.downvote.length}}{{/formatNumber}}</span></div>
+                    {{/includes}}
+                </div>
+                <div class="ico"><box-icon name='link' color="#fff" class="img"
+                        onclick="copyLink('{{this._id}}')"></box-icon></div>
+            </div>
+        </div>
+        {{/each}}
+        {{/if}}
+    </div>
+    {{/contains}}
+    {{#contains 'about' type}}
+    <div class="about-container">
+        <div class="about-area">{{#if profile.about}}{{profile.about}}{{else}}Iam a Thintry user!{{/if}}</div>
+        <div class="static-area">
+            <div class="created">
+                <box-icon name='calendar-alt' type='solid' color='#6fbf7e'></box-icon>&nbsp;{{#formatTime
+                profile.created.timestamp}}{{/formatTime}}
+            </div>
+            &nbsp;
+            <div class="location">
+                <box-icon name='current-location' color='#6fbf7e'></box-icon>&nbsp;{{profile.created.location.region}},
+                {{profile.created.location.country}}
+            </div>
+            &nbsp;
+            <div class="location" onclick="copyUrl('https://thintry.com/user/{{profile.username}}')">
+                <box-icon name='link' color='orange'></box-icon>&nbsp;Copy Url
+            </div>
+        </div>
+    </div>
+    <div style="width: 100%; height: 60px;"></div>
+    {{/contains}}
+</div>
+
+<script>
+    let errorMessage = document.getElementById('btmerr');
+    const successMessage = document.getElementById('btmsucc');
+    let followButtons = document.getElementById('followBtns');
+    let followersCount = document.getElementById('followersCount');
+    const onVote = async (postId, voteType) => {
+        try {
+            let upBtn = document.getElementById('up-' + postId);
+            let upVotes = document.getElementById('up-count-' + postId);
+            let mainUpVotes = document.getElementById('main-up-count-' + postId);
+            let dowBtn = document.getElementById('dow-' + postId);
+            let dowVotes = document.getElementById('dow-count-' + postId);
+            let mainDowVotes = document.getElementById('main-dow-count-' + postId);
+            const response = await fetch(`/api/vote`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ postId, voteType }),
+            });
+
+            if (response.ok) {
+                const responseData = await response.json();
+                if (responseData.error.status == 401) {
+                    location.href = '/auth/login';
+                } else {
+                    if (responseData.error.status == 203) {
+                        upBtn.innerHTML = `<box-icon type='solid' name='up-arrow' onclick="onVote('${postId}', 'up')" color="#6fbf7e"
+                        class="img"></box-icon>`;
+                        if (dowBtn.innerHTML == `<box-icon type="solid" name="down-arrow" onclick="onVote('64e70927ab6205d3b3dec94b', 'up')" color="#6fbf7e" class="img"></box-icon>`) {
+                            dowBtn.innerHTML = `<box-icon type='solid' name='down-arrow' onclick="onVote('${postId}', 'up')" color="#fff"
+                        class="img"></box-icon>`;
+                            dowVotes.innerText = parseInt(dowVotes.innerText) - 1;
+                            mainDowVotes.innerText = parseInt(mainDowVotes.innerText) - 1
+                        }
+                        upVotes.innerText = parseInt(upVotes.innerText) + 1;
+                        mainUpVotes.innerText = parseInt(mainUpVotes.innerText) + 1
+                    } else if (responseData.error.status == 204) {
+                        upBtn.innerHTML = `<box-icon type='solid' name='up-arrow' onclick="onVote('${postId}', 'up')" color="#fff"
+                        class="img"></box-icon>`;
+                        upVotes.innerText = parseInt(upVotes.innerText) - 1;
+                        mainUpVotes.innerText = parseInt(mainUpVotes.innerText) - 1
+                    } else if (responseData.error.status == 205) {
+                        dowBtn.innerHTML = `<box-icon type='solid' name='down-arrow' onclick="onVote('${postId}', 'up')" color="#6fbf7e"
+                        class="img"></box-icon>`;
+                        if (upBtn.innerHTML == `<box-icon type="solid" name="up-arrow" onclick="onVote('64e70927ab6205d3b3dec94b', 'up')" color="#6fbf7e" class="img"></box-icon>`) {
+                            upBtn.innerHTML = `<box-icon type='solid' name='up-arrow' onclick="onVote('${postId}', 'up')" color="#fff"
+                        class="img"></box-icon>`;
+                            upVotes.innerText = parseInt(upVotes.innerText) - 1;
+                            mainUpVotes.innerText = parseInt(mainUpVotes.innerText) - 1
+                        }
+                        dowVotes.innerText = parseInt(dowVotes.innerText) + 1;
+                        mainDowVotes.innerText = parseInt(mainDowVotes.innerText) + 1
+                    } else if (responseData.error.status == 206) {
+                        dowBtn.innerHTML = `<box-icon type='solid' name='down-arrow' onclick="onVote('${postId}', 'up')" color="#fff"
+                        class="img"></box-icon>`;
+                        upBtn.innerHTML = `<box-icon type='solid' name='up-arrow' onclick="onVote('${postId}', 'up')" color="#fff"
+                        class="img"></box-icon>`;
+                        dowVotes.innerText = parseInt(dowVotes.innerText) - 1;
+                        mainDowVotes.innerText = parseInt(mainDowVotes.innerText) - 1
+                    } else {
+                        errorMessage.textContent = 'Internal server error!'
+                        errorMessage.classList.add('active');
+                        setTimeout(() => {
+                            errorMessage.classList.remove('active');
+                        }, 3000);
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Error while voting:', error);
+        }
+    }
+
+    const copyLink = async (postId) => {
+        try {
+            await navigator.clipboard.writeText('https://thintry.com/post/' + postId);
+            successMessage.textContent = 'Copied the link';
+            successMessage.classList.add('active');
+            setTimeout(() => {
+                successMessage.classList.remove('active');
+            }, 3000);
+        } catch (error) {
+            // Fallback for browsers that don't support Clipboard API
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = 'https://thintry.com/post/' + postId;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            successMessage.textContent = 'Link copied';
+            successMessage.classList.add('active');
+            setTimeout(() => {
+                successMessage.classList.remove('active');
+            }, 3000);
+        }
+    };
+
+    const copyUrl = async (url) => {
+        const successMessage = document.getElementById('btmsucc');
+        try {
+            await navigator.clipboard.writeText(url);
+            successMessage.textContent = 'Copied the link';
+            successMessage.classList.add('active');
+            setTimeout(() => {
+                successMessage.classList.remove('active');
+            }, 3000);
+        } catch (error) {
+            // Fallback for browsers that don't support Clipboard API
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = url;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            successMessage.textContent = 'Link copied';
+            successMessage.classList.add('active');
+            setTimeout(() => {
+                successMessage.classList.remove('active');
+            }, 3000);
+        }
+    };
+
+    const follow = async (e) => {
+        const profileId = "{{profile._id}}"; // Get the profile ID from Handlebars
+        try {
+            const response = await fetch('/api/follow', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ profileId }) // Send profileId as JSON in the request body
+            });
+
+            if (response.ok) {
+                const responseData = await response.json();
+                if (responseData.error.status == 401) {
+                    location.href = '/auth/login';
+                }
+                if (responseData.error.status == 500) {
+                    errorMessage.innerHTML = responseData.error.message;
+                    errorMessage.classList.add('active');
+                    setTimeout(() => {
+                        errorMessage.classList.remove('active')
+                    }, 3000)
+                }
+
+                if (responseData.error.status == 200) {
+                    if (parseInt(followersCount.innerHTML) != 0) {
+                        followersCount.innerHTML = parseInt(followersCount.innerHTML) + 1;
+                    } else {
+                        followersCount.innerHTML = 1;
+                    }
+                    followButtons.innerHTML = `<button id="unFollowButton" onclick="unFollow()" class="unbutton"><box-icon name='user-minus' color="#6fbf7e"></box-icon>&nbsp;Unfollow</button>`
+                }
+                // You can update UI or take other actions based on the response
+            } else {
+                console.error('Follow API error:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error while making API call:', error);
+        }
+    }
+
+    const unFollow = async (e) => {
+        const profileId = "{{profile._id}}"; // Get the profile ID from Handlebars
+
+        try {
+            const response = await fetch('/api/unfollow', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ profileId }) // Send profileId as JSON in the request body
+            });
+
+            if (response.ok) {
+                const responseData = await response.json();
+                if (responseData.error.status == 401) {
+                    location.href = '/auth/login';
+                }
+                if (responseData.error.status == 500) {
+                    errorMessage.innerHTML = responseData.error.message;
+                    errorMessage.classList.add('active');
+                    setTimeout(() => {
+                        errorMessage.classList.remove('active')
+                    }, 3000)
+                }
+
+                if (responseData.error.status == 200) {
+                    if (parseInt(followersCount.innerHTML) != 0) {
+                        followersCount.innerHTML = parseInt(followersCount.innerHTML) - 1;
+                    }
+                    {{#if isFollowingBack}}
+                    followButtons.innerHTML = `<button id="followButton" onclick="follow()"><box-icon name='user-plus'></box-icon>&nbsp;Follow Back</button>`
+                    {{else}}
+                    followButtons.innerHTML = `<button id="followButton" onclick="follow()"><box-icon name='user-plus'></box-icon>&nbsp;Follow</button>`
+                    {{/if}}
+                    }
+                        // You can update UI or take other actions based on the response
+                    } else {
+                        console.error('Follow API error:', response.statusText);
+                    }
+                } catch (error) {
+                    console.error('Error while making API call:', error);
+                }
+            }
+</script>
+{{else}}
+<div class="null">
+    <span>No User</span>
+</div>
+{{/if}}

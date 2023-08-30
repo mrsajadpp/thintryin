@@ -1,0 +1,71 @@
+<div class="post-container" id="postContainer">
+    <div class="searchdiv">
+        <button id="navBtn" type="button">
+            <box-icon type='solid' name='chevron-left' color="#6fbf7e"></box-icon>
+        </button>
+        <div></div>
+    </div>
+    <div id="page" >
+        <div class="tweet">
+            <div class="tweet-container pt pb pr pl">
+                <div class="user pr">
+                    <div class="userl" onclick="location.href = '/profile'">
+                        <div class="profile">
+                            <img src="{{user.profile}}" onerror="this.src='/img/demopic.png'; this.onerror=null;" />
+                        </div>
+                        <div class="username">
+                            <div class="name">{{#if user}}{{user.firstname}} {{user.lastname}} &nbsp;{{#if
+                                user.verified}}<box-icon type='solid' name='badge-check'
+                                    color="#6fbf7e"></box-icon>{{/if}}{{else}}Login{{/if}}
+                            </div>
+                            <div class="handle">@{{#if user}}{{user.username}}{{else}}login{{/if}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <form class="newpost" action="/post/new" method="post">
+            <div class="contentarea">
+                <textarea name="content" id="content" placeholder="What is happening?" maxlength="300" required autofocus='false'></textarea>
+            </div>
+            <div class="postsubmit">
+                <button><box-icon type='solid' name='send'></box-icon></button>
+            </div>
+        </form>
+        <div class="text-msg">
+            Remember to keep respect.
+        </div>
+    </div>
+
+    <script>
+        const postPlusBtn = document.getElementById('postPlusBtn');
+        const postForm = document.getElementById('postForm');
+        const navBtn = document.getElementById('navBtn');
+        const postBackBtn = document.getElementById('postbackbtn');
+        const postContainer = document.getElementById('postContainer');
+
+        postBackBtn.addEventListener('click', () => {
+            postContainer.classList.toggle('actived');
+        });
+
+        navBtn.addEventListener('click', () => {
+            postContainer.classList.toggle('actived');
+        });
+
+        postPlusBtn.addEventListener('click', () => {
+            postContainer.classList.toggle('actived');
+        });
+
+        function validateForm() {
+            const textareaValue = document.getElementById('textArea').value;
+            const alphabetRegex = /[a-zA-Z]/g;
+            const alphabetCount = (textareaValue.match(alphabetRegex) || []).length;
+
+            if (alphabetCount < 1) {
+                alert('Content must contain at least 10 alphabets.');
+                return false;
+            }
+
+            return true;
+        }
+    </script>

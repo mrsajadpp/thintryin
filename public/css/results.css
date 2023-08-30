@@ -1,0 +1,410 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700");
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.search-containerr {
+    position: fixed;
+    top: 0px;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background-color: #0e0e0e;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 777;
+    transition: top 0.3s ease-in-out;
+  }
+
+#page {
+    margin: 0;
+    padding: 0;
+    max-width: 441px;
+    width: 100%;
+    overflow: hidden;
+    padding-bottom: 50px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 70px;
+}
+
+.tweet-container {
+    box-sizing: border-box;
+}
+
+.user {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+}
+
+.tweet .user img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin: 0px;
+    margin-right: 5px;
+    box-sizing: border-box;
+    float: left;
+    clear: both;
+}
+
+.username {
+    padding: 8px;
+    box-sizing: border-box;
+    width: 177px;
+    float: left;
+    display: flex;
+    flex-direction: column;
+}
+
+.user .userl {
+    width: 100%;
+    display: flex;
+    height: 54px;
+    align-items: center;
+    justify-content: start;
+}
+
+.user .userr {
+    width: 100%;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.user .profile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user .follow {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    height: 60px;
+    width: auto;
+}
+
+.user .follow button {
+    background-color: transparent;
+    border: none;
+    display: flex;
+    align-items: center;
+    height: 60%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.user .name {
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+    /* margin-bottom: 3px; */
+    display: flex;
+    line-height: 10px;
+    /* width: 100%; */
+    align-items: center;
+    justify-content: start;
+}
+
+.user .handle {
+    font-size: 15px;
+    font-weight: 400;
+    color: #8a9ba8;
+}
+
+.user .material-icons {
+    color: #6c7e8d;
+    float: right;
+    display: inline-block;
+    padding-top: 8px;
+    margin-right: -18px;
+    position: relative;
+    box-sizing: border-box;
+    font-size: 22px;
+}
+
+#tweet .ico img {
+    width: auto;
+    height: 1.05em;
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+.tweet-content {
+    width: 100%;
+    display: inline-block;
+    color: white;
+    font-size: 17px;
+    margin-bottom: 20px;
+    line-height: 28px;
+}
+
+a {
+    color: #1da2f4;
+    text-decoration: none;
+}
+
+.media {
+    width: 100%;
+    height: 233px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.date {
+    color: #8a9ba8;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.rl {
+    color: #8a9ba8;
+    margin: 0px;
+    box-sizing: border-box;
+    font-size: 15px;
+    position: relative;
+    border-top: 1px solid #15202a;
+    border-bottom: 1px solid #15202a;
+    font-weight: 400;
+}
+
+.rl:before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    width: 100%;
+    height: 1px;
+    background: #182430;
+}
+
+.rl b {
+    color: white;
+}
+
+.rl .retweets {
+    float: left;
+    margin-right: 13px;
+}
+
+.icons {
+    width: 100%;
+    margin-top: 0px;
+    padding: 0;
+    position: relative;
+    height: 37px;
+    border-bottom: 1px solid #15202a;
+}
+
+#tweet .icons:before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    width: 100%;
+    height: 1px;
+    background: #182430;
+}
+
+.ico {
+    float: left;
+    width: 25%;
+    text-align: center;
+    padding-bottom: 13px;
+}
+
+.pt {
+    padding-top: 13px;
+}
+
+.pb {
+    padding-bottom: 13px;
+}
+
+.pr {
+    padding-right: 13px;
+}
+
+.sl {
+    padding-left: 10px;
+}
+
+.pl {
+    padding-left: 13px;
+}
+
+.wrap .userinfo {
+    box-sizing: border-box;
+    max-width: 90%;
+    float: left;
+    margin: 0;
+    padding-bottom: 0px;
+}
+
+.wrap .info .name {
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    float: left;
+    margin-right: 6px;
+}
+
+.wrap .info .handle {
+    font-size: 16px;
+    font-weight: 400;
+    float: left;
+    color: #8a9ba8;
+}
+
+.wrap .info .time {
+    font-size: 16px;
+    font-weight: 400;
+    float: left;
+    color: #8a9ba8;
+    margin-left: 5px;
+}
+
+.wrap .info .time:before {
+    content: "•";
+    color: #8a9ba8;
+    margin-right: 5px;
+}
+
+.info .material-icons {
+    color: #6c7e8d;
+    float: right;
+    font-size: 22px;
+    z-index: 999;
+    margin-right: -5px;
+}
+
+.wrap {
+    position: relative;
+    margin: 0px;
+}
+
+.box {
+    height: auto;
+    min-height: 100px;
+    position: relative;
+    padding-bottom: 5px;
+    padding-right: 13px;
+    padding-left: 13px;
+}
+
+.wrap .avatar {
+    width: 54px;
+    height: 54px;
+    object-fit: cover;
+    border-radius: 58px;
+    margin: 0px;
+    box-sizing: border-box;
+    z-index: 99;
+    position: relative;
+}
+
+.border {
+    border-right: 3px solid #3d5466;
+    height: 100%;
+    left: 39px;
+    position: absolute;
+    top: 13px;
+    width: 1px;
+    z-index: 0;
+}
+
+.box:last-child .border {
+    display: none;
+}
+
+.box:last-child {
+    border-bottom: 1px solid #15202a;
+}
+
+.box:last-child:before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0px;
+    width: 100%;
+    height: 1px;
+    background: #182430;
+}
+
+.content {
+    overflow: hidden;
+}
+
+.line {
+    float: left;
+    display: block;
+}
+
+.replyto {
+    float: left;
+    display: block;
+    color: #8a9ba8;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.subtweet-content {
+    width: 100%;
+    color: white;
+    float: left;
+    margin-bottom: 13px;
+    display: inline-block;
+    position: relative;
+    padding-bottom: 26px;
+    line-height: 21px;
+    font-size: 16px;
+}
+
+.wrap .icons {
+    width: 100%;
+    height: auto;
+    padding-left: 13px;
+    position: absolute;
+    bottom: 13px;
+    border-bottom: 0px solid #101921;
+}
+
+.wrap .ico {
+    float: left;
+    width: 21%;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+}
+
+.wrap .ico .img {
+    width: auto;
+    height: 0.9em;
+    display: inline;
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+
+.number {
+    display: inline;
+    position: relative;
+    color: #8a9ba8;
+    top: -8px;
+    font-size: 13px;
+    font-weight: 400;
+    margin-left: 8px;
+}

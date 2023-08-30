@@ -1,0 +1,56 @@
+<div class="settings-container">
+    <div class="searchdiv">
+        <button id="navbackbtn" onclick="location.href = '/profile'" type="button">
+            <box-icon type='solid' name='chevron-left' color="#6fbf7e"></box-icon>
+        </button>
+        <div></div>
+    </div>
+    <div class="about-container">
+        <div class="static-area">
+            <div class="created" onclick="composeEmail()">
+                <box-icon name='bug' color='#6fbf7e'></box-icon>&nbsp;Report Bug
+            </div>
+            <div class="created" onclick="location.href = '/logout'" style="color: orange;">
+                <box-icon name='log-out' color="orange"></box-icon>&nbsp;Logout
+            </div>
+            <div class="created" onclick="composeDelEmail()" style="color: red;">
+                <box-icon name='trash' color='red'></box-icon>&nbsp;Deletion Request
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function composeEmail() {
+        var toAddress = "help@thintry.com";
+        var subject = "New bug report!";
+
+        var postData = {
+            userId: "{{user._id}}",
+            username: "{{user.username}}",
+            email: "{{user.email}}",
+            verified: "{{user.verified}}"
+        };
+
+        var body = JSON.stringify(postData, null, 2); // Converts the postData object to a JSON string with formatting
+
+        var mailtoLink = "mailto:" + encodeURIComponent(toAddress) + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+        window.location.href = mailtoLink;
+    }
+
+    function composeDelEmail() {
+        var toAddress = "help@thintry.com";
+        var subject = "New Account delet request!";
+
+        var postData = {
+            userId: "{{user._id}}",
+            username: "{{user.username}}",
+            email: "{{user.email}}",
+            verified: "{{user.verified}}"
+        };
+
+        var body = JSON.stringify(postData, null, 2); // Converts the postData object to a JSON string with formatting
+
+        var mailtoLink = "mailto:" + encodeURIComponent(toAddress) + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+        window.location.href = mailtoLink;
+    }
+</script>

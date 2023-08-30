@@ -1,0 +1,82 @@
+<style>
+    .stories {
+        margin-top: 70px;
+        max-width: 100vw;
+        padding: 10px;
+        display: grid;
+        grid-auto-flow: column;
+        gap: 1rem;
+        overflow-x: auto;
+        background-color: #060002;
+        z-index: 999;
+    }
+
+    @media screen and (min-width: 768px) {
+        .stories {
+            gap: 0rem;
+        }
+    }
+
+    .stories::-webkit-scrollbar {
+        display: none;
+    }
+
+    .story {
+        position: relative;
+        width: 70px;
+        height: 70px;
+        border-radius: 8px;
+        border: 2px solid #6fbf7e;
+        margin: 0px;
+    }
+
+    .story img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .story::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: calc(100% + 5px);
+        height: calc(100% + 5px);
+        background-image: linear-gradient(45deg, #c1ecca 50%, #6fbf7e 75%, #23b03c 100%);
+        border-radius: inherit;
+        z-index: -1;
+        /* Adjusted z-index to place it below the image */
+    }
+</style>
+<div class="stories">
+    <div class="story">
+        <img src="https://pbs.twimg.com/profile_images/1676547059665760262/9gKu95Sm_400x400.jpg" alt="">
+    </div>
+    <div class="story">
+        <img src="https://pbs.twimg.com/profile_images/1676547059665760262/9gKu95Sm_400x400.jpg" alt="">
+    </div>
+    <div class="story">
+        <img src="https://pbs.twimg.com/profile_images/1676547059665760262/9gKu95Sm_400x400.jpg" alt="">
+    </div>
+    <div class="story">
+        <img src="https://pbs.twimg.com/profile_images/1676547059665760262/9gKu95Sm_400x400.jpg" alt="">
+    </div>
+    <div class="story">
+        <img src="https://pbs.twimg.com/profile_images/1676547059665760262/9gKu95Sm_400x400.jpg" alt="">
+    </div>
+    <div class="story">
+        <img src="https://pbs.twimg.com/profile_images/1676547059665760262/9gKu95Sm_400x400.jpg" alt="">
+    </div>
+    <div class="story">
+        <img src="https://pbs.twimg.com/profile_images/1676547059665760262/9gKu95Sm_400x400.jpg" alt="">
+    </div>
+    <div class="story">
+        <img src="https://pbs.twimg.com/profile_images/1676547059665760262/9gKu95Sm_400x400.jpg" alt="">
+    </div>
+    <div class="story">
+        <img src="https://pbs.twimg.com/profile_images/1676547059665760262/9gKu95Sm_400x400.jpg" alt="">
+    </div>
+</div>

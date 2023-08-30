@@ -1,0 +1,21 @@
+.about-container .static-area {
+    width: 100%;
+    height: 215px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+
+.static-area div {
+    width: 90%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding-left: 30px;
+    color: #fff;
+    background-color: #101921;
+    border-radius: 85px;
+    margin-top: 10px;
+}

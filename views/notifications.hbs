@@ -1,0 +1,23 @@
+{{#if notifications}}
+<ul class="suggestionss">
+    {{#each notifications}}
+    {{#contains 'upvote' this.type}}
+    <li onclick="location.href = '/post/{{this.post}}'">
+    <box-icon type='solid' name='up-arrow' color="#6fbf7e"></box-icon>&nbsp;New Upvote
+    </li>
+    {{/contains}}
+    {{#contains 'downvote' this.type}}
+    <li onclick="location.href = '/post/{{this.post}}'">
+    <box-icon type='solid' name='down-arrow' color="#6fbf7e"></box-icon>&nbsp;New Downvote
+    </li>{{/contains}}
+    {{#contains 'follower' this.type}} 
+    <li onclick="location.href = '/user/{{this.user.username}}'">
+    <box-icon type='solid' name='user-plus' color="#6fbf7e"></box-icon>&nbsp;{{this.user.firstname}} followed you
+    </li>{{/contains}}
+    {{#contains 'reply' this.type}} 
+    <li onclick="location.href = '/post/{{this.post}}'">
+    <box-icon name='message-square-dots' color="#6fbf7e"></box-icon>&nbsp;{{this.user.firstname}} replied
+    </li>{{/contains}}
+    {{/each}}
+</ul>
+{{/if}}

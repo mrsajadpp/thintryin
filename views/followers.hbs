@@ -1,0 +1,45 @@
+<div class="settings-container">
+    <div class="searchdiv">
+        <button id="navbackbtn" onclick="location.href = '/profile'" type="button">
+            <box-icon type='solid' name='chevron-left' color="#6fbf7e"></box-icon>
+        </button>
+        <div class="page-head">Followers</div>
+    </div>
+    <div class="about-container">
+        {{#if followers.length}}
+        {{#each followers}}
+        <div id="{{this.followerDetails._id}}" class="tweet">
+            <div class="tweet-container pt pb pr pl">
+                <div class="user pr">
+                    <div class="userl" onclick="location.href = '/user/{{this.followerDetails.username}}'">
+                        <div class="profile">
+                            <img src="{{this.followerDetails.profile}}" onerror="this.src='/img/demopic.png'; this.onerror=null;"
+                                alt="{{this.followerDetails.firstanme}} {{this.followerDetails.lastname}} - Thintry" />
+                        </div>
+                        <div class="username">
+                            <div class="name">{{this.followerDetails.firstname}} {{this.followerDetails.lastname}} &nbsp;{{#if this.followerDetails.verified}}{{#if
+                                this.followerDetails.official}}<box-icon type='solid' name='badge-check'
+                                    color="#6fbf7e"></box-icon>{{else}}<box-icon type='solid' name='badge-check'
+                                    color="#fff"></box-icon>{{/if}}{{/if}}
+                            </div>
+                            <div class="handle">@{{this.followerDetails.username}}</div>
+                        </div>
+                    </div>
+                    <div class="userr">
+                        <div class="follow">
+                            <button class="bttwo" onclick="location.href = '/user/{{this.followerDetails.username}}'">
+                                <box-icon name='user' color="#6fbf7e"></box-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        {{else}}
+        <div class="null">
+            <span>No Followers</span>
+        </div>
+        {{/if}}
+    </div>
+</div>

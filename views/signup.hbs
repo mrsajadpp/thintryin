@@ -1,0 +1,125 @@
+<div class="loginForm">
+    <div class="bannerArea">
+        <img src="/img/thintry-logo.png" alt="">
+    </div>
+    <div class="inputs">
+        <form action="/auth/signup" method="post" onsubmit="return validateForm()">
+            <div class="name">
+                <div class="input">
+                    <input type="text" class="noerror-inp" id="firstname" name="firstname" placeholder="First Name"
+                        required autocomplete="off">
+                    <span id="firstnameError" class="error"></span> <!-- Added this line -->
+                </div>&nbsp;
+                <div class="input">
+                    <input class="noerror-inp" type="text" id="lastname" name="lastname" placeholder="Last Name"
+                        required autocomplete="off">
+                    <span id="lastnameError" class="error"></span> <!-- Added this line -->
+                </div>
+            </div>
+            <div class="input">
+                <input type="text" class="noerror-inp" id="username" name="username" placeholder="Username" required
+                    autocomplete="off">
+                <span id="usernameError" class="error"></span>
+            </div>
+            <div class="input">
+                <input type="email" class="noerror-inp" id="email" name="email" placeholder="Email" required
+                    autocomplete="off">
+                <span id="emailError" class="error"></span>
+            </div>
+            <div class="input">
+                <input type="password" class="noerror-inp" name="password" id="password" placeholder="Password" required
+                    autocomplete="off">
+                <span id="passwordError" class="error"></span>
+            </div>
+            {{#if error}}
+            <script>
+                const firstnamee = document.getElementById('firstname');
+                const lastnamee = document.getElementById('lastname');
+                const usernamee = document.getElementById('username');
+                const emaile = document.getElementById('email');
+                const passworde = document.getElementById('password');
+                firstnamee.classList.replace('noerror-inp', 'error-inp');
+                lastnamee.classList.replace('noerror-inp', 'error-inp');
+                emaile.classList.replace('noerror-inp', 'error-inp');
+                usernamee.classList.replace('noerror-inp', 'error-inp');
+                passworde.classList.replace('noerror-inp', 'error-inp');
+            </script>
+            <div id="serverError" class="servererror">{{error.message}}</div>
+            {{/if}}
+            <div class="loginbtn">
+                <button>SignUp</button>
+            </div>
+            <div class="textarea">
+                <span>Already have an account? , <a href="/auth/login">LogIn</a>.</span>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function validateForm() {
+        let valid = true;
+        const firstname = document.getElementById('firstname').value;
+        const lastname = document.getElementById('lastname').value;
+        const username = document.getElementById('username').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const firstnameError = document.getElementById('firstnameError');
+        const lastnameError = document.getElementById('lastnameError');
+        const usernameError = document.getElementById('usernameError');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+
+        // Validate first name
+        if (firstname.trim() === "") {
+            firstnameError.textContent = "First Name is required";
+            firstnameError.classList.add('show');
+            valid = false;
+        } else {
+            firstnameError.textContent = "";
+            firstnameError.classList.remove('show');
+        }
+
+        // Validate last name
+        if (lastname.trim() === "") {
+            lastnameError.textContent = "Last Name is required";
+            lastnameError.classList.add('show');
+            valid = false;
+        } else {
+            lastnameError.textContent = "";
+            lastnameError.classList.remove('show');
+        }
+
+        // Validate username (no spaces)
+        if (username.includes(' ')) {
+            usernameError.textContent = "Username cannot contain spaces";
+            usernameError.classList.add('show');
+            valid = false;
+        } else {
+            usernameError.textContent = "";
+            usernameError.classList.remove('show');
+        }
+
+        // Validate email format
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            emailError.textContent = "Invalid email format";
+            emailError.classList.add('show');
+            valid = false;
+        } else {
+            emailError.textContent = "";
+            emailError.classList.remove('show');
+        }
+
+        // Validate password (at least 6 characters)
+        if (password.length < 6) {
+            passwordError.textContent = "Password must be at least 6 characters";
+            passwordError.classList.add('show');
+            valid = false;
+        } else {
+            passwordError.textContent = "";
+            passwordError.classList.remove('show');
+        }
+
+        return valid;
+    }
+</script>

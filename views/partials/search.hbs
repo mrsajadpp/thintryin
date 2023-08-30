@@ -1,0 +1,32 @@
+<div class="search-container" id="searchContainer">
+    <form class="searchdiv" action="/search" method="get">
+        <button id="backbtn" type="button">
+            <box-icon type='solid' name='chevron-left' color="#6fbf7e"></box-icon>
+        </button>
+        <input type="text" placeholder="Search" name="q" autocomplete="off" autofocus="true">
+        <button type="submit">
+            <box-icon name='search' color="#6fbf7e"></box-icon>
+        </button>
+    </form>
+    <ul class="suggestions">
+        <li onclick="location.href = '/search?q=thintry'"><box-icon name='trending-up'
+                color="#6fbf7e"></box-icon>&nbsp;Thintry</li>
+        <li onclick="location.href = '/search?q=Independence'"><box-icon name='trending-up'
+                color="#6fbf7e"></box-icon>&nbsp;Independence Day</li>
+        <li onclick="location.href = '/search?q=chandrayaan'"><box-icon name='trending-up'
+                color="#6fbf7e"></box-icon>&nbsp;Chandrayaan 3</li>
+    </ul>
+</div>
+<script>
+    const searchBtn = document.getElementById('searchBtn');
+    const backBtn = document.getElementById('backbtn');
+    const searchContainer = document.getElementById('searchContainer');
+
+    backBtn.addEventListener('click', () => {
+        searchContainer.classList.toggle('active');
+    });
+
+    searchBtn.addEventListener('click', () => {
+        searchContainer.classList.toggle('active');
+    });
+</script>
