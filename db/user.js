@@ -122,13 +122,15 @@ module.exports = {
                     try {
                         if (!user) {
                             let verification_code = await Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+                            let hashed_vf = await bcrypt.hash(verification_code, saltRounds);
+                            let hashed_pass = await bcrypt.hash(userData.password, saltRounds);
                             let newUserData = await {
                                 username: userData.username.toLowerCase(),
                                 firstname: userData.firstname,
                                 lastname: userData.lastname,
                                 email: userData.email,
                                 about: 'Iam a Thintry user!',
-                                password: await bcrypt.hash(userData.password, saltRounds),
+                                password: hashed_pass,
                                 verified: false,
                                 official: false,
                                 status: false,
@@ -143,7 +145,7 @@ module.exports = {
                                 followers: [],
                                 followings: [],
                                 verification_code: verification_code,
-                                encrypted_verification_code: bcrypt.hash(verification_code, saltRounds)
+                                encrypted_verification_code: hashed_vf
                             }
 
                             db.get().collection(COLLECTIONS.USERS).insertOne(newUserData)
@@ -285,6 +287,7 @@ module.exports = {
     verify: (data) => {
         return new Promise(async (resolve, reject) => {
             try {
+                console.log(data)
                 let isValidOtp = await bcrypt.compare(data.otp, data.encrypted);
                 if (isValidOtp) {
                     db.get().collection(COLLECTIONS.USERS).findOneAndUpdate(

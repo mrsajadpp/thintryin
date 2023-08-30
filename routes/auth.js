@@ -55,6 +55,7 @@ router.post('/signup', notLogIn, async (req, res, next) => {
 });
 
 router.post('/verify', notLogIn, (req, res, next) => {
+  console.log(req.body)
   userData.verify(req.body)
     .then((user) => {
       req.session.user = user;
