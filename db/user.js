@@ -51,7 +51,7 @@ const removeDuplicateFollowersAndFollowings = async () => {
 
         for (const user of users) {
             const uniqueFollowers = await findUniqueValues(user.followers);
-            const uniqueFollowings = await findUniqueValues(user.followers);
+            const uniqueFollowings = await findUniqueValues(user.followings);
 
             await db.get().collection(COLLECTIONS.USERS).updateOne(
                 { _id: user._id },
