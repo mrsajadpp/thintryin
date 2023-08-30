@@ -1,7 +1,7 @@
 const db = require('./config.js');
 const COLLECTIONS = require('./cls.js');
 var Filter = require('bad-words');
-var badFilter = new Filter({ placeHolder: 'x', replaceRegex: /[A-Za-z0-9가-힣_]/g, regex: /\*|\.|$/gi });
+var badFilter = new Filter({ placeHolder: '*', replaceRegex: /[A-Za-z0-9가-힣_]/g, regex: /\*|\.|$/gi });
 var profanity = require("profanity-hindi");
 const ObjectId = require('mongodb').ObjectID;
 const uuid = require('uuid');
