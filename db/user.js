@@ -31,13 +31,27 @@ let sendMail = (data) => {
 
 // ...
 
+function findUniqueValues(arr) {
+    const uniqueValues = [];
+    const seenValues = {};
+
+    for (const value of arr) {
+        if (!seenValues[value]) {
+            uniqueValues.push(value);
+            seenValues[value] = true;
+        }
+    }
+
+    return uniqueValues;
+}
+
 const removeDuplicateFollowersAndFollowings = async () => {
     try {
         const users = await db.get().collection(COLLECTIONS.USERS).find({}).toArray();
 
         for (const user of users) {
-            const uniqueFollowers = Array.from(new Set(user.followers));
-            const uniqueFollowings = Array.from(new Set(user.followings));
+            const uniqueFollowers = await findUniqueValues(user.followers);
+            const uniqueFollowings = await findUniqueValues(user.followers);
 
             await db.get().collection(COLLECTIONS.USERS).updateOne(
                 { _id: user._id },
